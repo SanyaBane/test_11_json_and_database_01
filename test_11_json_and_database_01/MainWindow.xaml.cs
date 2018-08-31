@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using test_11_json_and_database_01.Database;
 
 namespace test_11_json_and_database_01
 {
@@ -53,6 +54,7 @@ namespace test_11_json_and_database_01
             List<JsonFile_1.Price> prices = root.Data.prices;
 
 
+            var mda = DB_test_Queries.dx_article_table_fields;
 
         }
     }

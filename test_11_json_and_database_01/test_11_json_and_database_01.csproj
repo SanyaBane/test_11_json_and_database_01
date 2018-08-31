@@ -81,7 +81,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Database\DBConnect.cs" />
-    <Compile Include="Database\DB_Countries_Queries.cs" />
+    <Compile Include="Database\DB_test_Queries.cs" />
     <Compile Include="JsonFile_1.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
