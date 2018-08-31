@@ -45,8 +45,13 @@ namespace test_11_json_and_database_01
 
             Console.WriteLine(jsonData);
 
-            JsonFile_1.RootObject mda = JsonConvert.DeserializeObject<JsonFile_1.RootObject>(jsonData);
-            
+            JsonFile_1.RootObject root = JsonConvert.DeserializeObject<JsonFile_1.RootObject>(jsonData);
+
+
+            JsonFile_1.Data data = root.Data;
+
+            List<JsonFile_1.Price> prices = root.Data.prices;
+
 
 
         }
