@@ -12,6 +12,7 @@ namespace test_11_json_and_database_01.Database
     class DBConnect
     {
         private MySqlConnection connection;
+
         private string server;
         private string database;
         private string uid;
@@ -48,7 +49,35 @@ namespace test_11_json_and_database_01.Database
 
         }
 
-        private bool OpenConnection()
+        private MySqlTransaction mySqlTransaction = null;
+
+        public void TransactionBegin()
+        {
+            if (mySqlTransaction == null)
+            {
+                mySqlTransaction = connection.BeginTransaction();
+            }
+        }
+
+        public void TransactionCommit()
+        {
+            if (mySqlTransaction != null)
+            {
+                mySqlTransaction.Commit();
+                mySqlTransaction = null;
+            }
+        }
+
+        public void TransactionRollback()
+        {
+            if(mySqlTransaction != null)
+            {
+                mySqlTransaction.Rollback();
+                mySqlTransaction = null;
+            }
+        }
+
+        public bool OpenConnection()
         {
             try
             {
@@ -72,7 +101,7 @@ namespace test_11_json_and_database_01.Database
             }
         }
 
-        private bool CloseConnection()
+        public bool CloseConnection()
         {
             try
             {
@@ -85,54 +114,29 @@ namespace test_11_json_and_database_01.Database
                 return false;
             }
         }
+        
 
-        public DataTable Select(MySqlCommand cmd)
+        public bool Insert(MySqlCommand cmd)
         {
-            if (this.OpenConnection() == true)
+            if (connection.State == ConnectionState.Open)
             {
+
                 cmd.Connection = connection;
-                MySqlDataAdapter adap = new MySqlDataAdapter(cmd);
-                DataSet ds = new DataSet();
-                adap.Fill(ds);
 
-                this.CloseConnection();
+                try
+                {
+                    cmd.ExecuteNonQuery();
 
-                return ds.Tables[0];
+                    return true;
+                }
+                catch(MySqlException ex)
+                {
+                    throw ex;
+                    return false;
+                }
             }
-            else
-            {
-                return null;
-            }
-        }
 
-        public void Insert()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Update()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete()
-        {
-            throw new NotImplementedException();
-        }
-
-        public int Count()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Backup()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Restore()
-        {
-            throw new NotImplementedException();
+            return false;
         }
     }
 }

@@ -32,30 +32,21 @@ namespace test_11_json_and_database_01
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            //dynamic stuff = JsonConvert.DeserializeObject("{ 'Name': 'Jon Smith', 'Address': { 'City': 'New York', 'State': 'NY' }, 'Age': 42 }");
-
-            //string name = stuff.Name;
-            //Console.WriteLine(name);
-
-            //DoIt();
+            DoIt();
         }
 
         public void DoIt()
         {
-            string jsonData = File.ReadAllText(System.IO.Path.Combine(Environment.CurrentDirectory, "json_01.json")).Trim();
+            string jsonFile = File.ReadAllText(System.IO.Path.Combine(Environment.CurrentDirectory, "json_01.json")).Trim();
 
-            Console.WriteLine(jsonData);
+            //Console.WriteLine(jsonFile);
 
-            JsonFile_1.RootObject root = JsonConvert.DeserializeObject<JsonFile_1.RootObject>(jsonData);
-
+            JsonFile_1.RootObject root = JsonConvert.DeserializeObject<JsonFile_1.RootObject>(jsonFile);
 
             JsonFile_1.Data data = root.Data;
 
-            List<JsonFile_1.Price> prices = root.Data.prices;
-
-
-            var mda = DB_test_Queries.dx_article_table_fields;
-
+            bool isQuerySuccessfull = DB_test_Queries.InsertDataFromJson_1(data);
+            Console.WriteLine("isQuerySuccessfull = " + isQuerySuccessfull);
         }
     }
 }

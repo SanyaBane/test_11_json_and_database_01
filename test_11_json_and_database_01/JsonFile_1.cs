@@ -50,6 +50,7 @@ namespace test_11_json_and_database_01
             public int? value_id { get; set; }
             public int is_public { get; set; }
             public int attribute_id { get; set; }
+            public string article_attribute_id { get; set; }
         }
 
         public class Note
